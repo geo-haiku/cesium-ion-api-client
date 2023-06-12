@@ -1,0 +1,28 @@
+[project]
+name = "cesium-ion-api-client"
+version = "0.1.0"
+description = ""
+authors = [
+    {name = "Dominik Melnarowicz", email = "payp8@protonmail.com"},
+]
+dependencies = [
+    "pydantic>=1.10.8",
+    "requests-toolbelt>=1.0.0",
+    "python-dotenv>=1.0.0",
+]
+requires-python = ">=3.11"
+readme = "README.md"
+license = {text = "MIT"}
+
+[build-system]
+requires = ["pdm-backend"]
+build-backend = "pdm.backend"
+
+[tool.pdm.dev-dependencies]
+dev = [
+    "pre-commit>=3.3.2",
+]
+
+[tool.pyright]
+venvPath = "."
+venv = ".venv"
