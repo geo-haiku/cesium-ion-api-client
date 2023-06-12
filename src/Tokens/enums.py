@@ -2,8 +2,8 @@ from enum import Enum
 
 
 class SortByType(Enum):
-    NAME = 'name'
-    LAST_USED = 'last_used'
+    NAME = "name"
+    LAST_USED = "last_used"
 
 
 class TokenScopes(Enum):

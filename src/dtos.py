@@ -13,13 +13,15 @@ class PaginationLinks(BaseModel):
 
     @staticmethod
     def from_header(link_header: str) -> PaginationLinks:
-        pagination_links = PaginationLinks()
-        header_els = link_header.split('; ')
+        pagination_links = PaginationLinks(next=None, prev=None)
+        header_els = link_header.split("; ")
         try:
             url1 = header_els[0][1:-1]
             rel1 = header_els[1][5:-1]
         except IndexError:
-            raise MalformedResponseError(f"`Link` header value is invalid: {link_header=}.")
+            raise MalformedResponseError(
+                f"`Link` header value is invalid: {link_header=}."
+            )
         else:
             setattr(pagination_links, rel1, url1)
 

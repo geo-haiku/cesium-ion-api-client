@@ -15,6 +15,6 @@ class ProfileInfoResponse(BaseModel):
     scopes: List[str]
     username: Optional[str]
     email: Optional[str]
-    email_verified: Optional[bool] = Field(alias='emailVerified')
+    email_verified: Optional[bool] = Field(alias="emailVerified")
     avatar: Optional[str]
     storage: Optional[Storage]

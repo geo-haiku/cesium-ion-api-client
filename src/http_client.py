@@ -1,20 +1,28 @@
-
 from logging import Logger
-from typing import Tuple, Protocol
+from typing import Tuple, Protocol, Dict
 from requests_toolbelt.sessions import BaseUrlSession
+from requests.structures import CaseInsensitiveDict
+
 
 class HTTPClientProtocol(Protocol):
-    def post(self, endpoint: str, headers: dict, data: dict) -> Tuple[int, dict, dict]:
+    def post(
+        self, endpoint: str, headers: dict, data: dict
+    ) -> Tuple[int, dict, CaseInsensitiveDict[str]]:
         raise NotImplementedError()
 
-    def get(self, endpoint: str, headers: dict) -> Tuple[int, dict, dict]:
+    def get(
+        self, endpoint: str, headers: dict
+    ) -> Tuple[int, dict, CaseInsensitiveDict[str]]:
         raise NotImplementedError()
 
-    def patch(self, endpoint: str, headers: dict, data: dict) -> Tuple[int, dict, dict]:
+    def patch(
+        self, endpoint: str, headers: dict, data: dict
+    ) -> Tuple[int, dict, CaseInsensitiveDict[str]]:
         raise NotImplementedError()
 
     def delete(self, endpoint: str, headers: dict) -> None:
         raise NotImplementedError()
+
 
 class SessionClient(HTTPClientProtocol):
     def __init__(self, host: str, log: Logger, bearer_token: str):
@@ -22,7 +30,9 @@ class SessionClient(HTTPClientProtocol):
         self.host = host
         self.log = log
 
-    def post(self, endpoint: str, headers: dict, data: dict) -> Tuple[int, dict, dict]:
+    def post(
+        self, endpoint: str, headers: dict, data: dict
+    ) -> Tuple[int, dict, CaseInsensitiveDict[str]]:
         with self._build_session(headers) as s:
             result = s.post(endpoint, json=data)
         if result.status_code != 200:
@@ -31,9 +41,13 @@ class SessionClient(HTTPClientProtocol):
                 f'Error: "{str(result.content)}"'
             )
 
-        return result.status_code, result.json(), result.headers
+        response_body: Dict = result.json()
 
-    def get(self, endpoint: str, headers: dict) -> Tuple[int, dict, dict]:
+        return result.status_code, response_body, result.headers
+
+    def get(
+        self, endpoint: str, headers: dict
+    ) -> Tuple[int, dict, CaseInsensitiveDict[str]]:
         with self._build_session(headers) as s:
             result = s.get(endpoint)
         if result.status_code != 200:
@@ -41,9 +55,13 @@ class SessionClient(HTTPClientProtocol):
                 f'Request to: {endpoint} has returned with status code: {result.status_code}. Error: "{str(result.content)}"'
             )
 
-        return result.status_code, result.json(), result.headers
+        response_body: Dict = result.json()
 
-    def patch(self, endpoint: str, headers: dict, data: dict) -> Tuple[int, dict, dict]:
+        return result.status_code, response_body, result.headers
+
+    def patch(
+        self, endpoint: str, headers: dict, data: dict
+    ) -> Tuple[int, dict, CaseInsensitiveDict[str]]:
         with self._build_session(headers) as s:
             result = s.patch(endpoint, json=data)
         if result.status_code != 204:
@@ -52,7 +70,9 @@ class SessionClient(HTTPClientProtocol):
                 f'Error: "{str(result.content)}"'
             )
 
-        return result.status_code, result.json(), result.headers
+        response_body: Dict = result.json()
+
+        return result.status_code, response_body, result.headers
 
     def delete(self, endpoint: str, headers: dict) -> None:
         with self._build_session(headers) as s:
@@ -66,8 +86,6 @@ class SessionClient(HTTPClientProtocol):
     def _build_session(self, headers: dict) -> BaseUrlSession:
         s = BaseUrlSession(self.host)
         s.headers.update(headers)
-        s.headers.update({'Authorization': f"Bearer {self.bearer_token}"})
+        s.headers.update({"Authorization": f"Bearer {self.bearer_token}"})
         self.log.debug(f"{len(headers) + 1} header successfully added to base session.")
         return s
-
-
