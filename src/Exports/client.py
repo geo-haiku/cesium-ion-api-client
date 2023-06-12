@@ -1,4 +1,4 @@
-from logging import Logger
+import logging
 from typing import Dict, Optional, Tuple
 
 from Exports.dtos import (
@@ -13,11 +13,12 @@ from Exports.dtos import (
 from dtos import PaginationLinks
 from http_client import HTTPClientProtocol
 
+logger = logging.getLogger(__name__)
+
 
 class ExportsApiClient:
-    def __init__(self, http_client: HTTPClientProtocol, log: Logger):
+    def __init__(self, http_client: HTTPClientProtocol):
         self._http_client = http_client
-        self._log = log
 
     def list_exports(
         self, path_params: ListExportsPathParams
@@ -34,10 +35,10 @@ class ExportsApiClient:
         try:
             link_header = headers["Link"]
         except KeyError:
-            self._log.debug("`Link` header is NOT present in the response.`")
+            logging.debug("`Link` header is NOT present in the response.`")
             pagination_links = None
         else:
-            self._log.debug("`Link` header is present in the response.`")
+            logging.debug("`Link` header is present in the response.`")
             pagination_links = PaginationLinks.from_header(link_header)
         return pagination_links
 

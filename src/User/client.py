@@ -1,13 +1,14 @@
-from logging import Logger
+import logging
 
 from User.dtos import ProfileInfoResponse
 from http_client import HTTPClientProtocol
 
+logger = logging.getLogger(__name__)
+
 
 class UserApiClient:
-    def __init__(self, http_client: HTTPClientProtocol, log: Logger):
+    def __init__(self, http_client: HTTPClientProtocol):
         self._http_client = http_client
-        self._log = log
 
     def get_profile_info(self) -> ProfileInfoResponse:
         endpoint_url = "/v1/me"

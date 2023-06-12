@@ -1,4 +1,4 @@
-from logging import Logger
+import logging
 from typing import Tuple, Optional, Dict, Union
 
 from Assets.dtos import (
@@ -19,11 +19,12 @@ from dtos import PaginationLinks
 from exceptions import MalformedResponseError
 from http_client import HTTPClientProtocol
 
+logger = logging.getLogger(__name__)
+
 
 class AssetsApiClient:
-    def __init__(self, http_client: HTTPClientProtocol, log: Logger):
+    def __init__(self, http_client: HTTPClientProtocol):
         self._http_client = http_client
-        self._log = log
 
     def list_assets(
         self, query_params: ListAssetsQueryParameters
@@ -40,10 +41,10 @@ class AssetsApiClient:
         try:
             link_header = headers["Link"]
         except KeyError:
-            self._log.debug("`Link` header is NOT present in the response.`")
+            logging.debug("`Link` header is NOT present in the response.`")
             pagination_links = None
         else:
-            self._log.debug("`Link` header is present in the response.`")
+            logging.debug("`Link` header is present in the response.`")
             pagination_links = PaginationLinks.from_header(link_header)
         return pagination_links
 
@@ -104,7 +105,7 @@ class AssetsApiClient:
             try:
                 endpoint_dto = type.parse_obj(response_body)
             except ValueError as e:
-                self._log.debug(
+                logging.debug(
                     f"The provided response is not matching the schema of type: `{type}` because of {str(e)}."  # noqa: F501
                 )
             else:

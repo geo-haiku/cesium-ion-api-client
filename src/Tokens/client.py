@@ -1,4 +1,4 @@
-from logging import Logger
+import logging
 from typing import Tuple, Optional, Dict
 
 from Tokens.dtos import (
@@ -16,11 +16,12 @@ from Tokens.dtos import (
 from dtos import PaginationLinks
 from http_client import HTTPClientProtocol
 
+logger = logging.getLogger(__name__)
+
 
 class TokensApiClient:
-    def __init__(self, http_client: HTTPClientProtocol, log: Logger):
+    def __init__(self, http_client: HTTPClientProtocol):
         self._http_client = http_client
-        self._log = log
 
     def list_tokens(
         self, query_params: ListTokensQueryParameters
@@ -37,10 +38,10 @@ class TokensApiClient:
         try:
             link_header = headers["Link"]
         except KeyError:
-            self._log.debug("`Link` header is NOT present in the response.`")
+            logger.debug("`Link` header is NOT present in the response.`")
             pagination_links = None
         else:
-            self._log.debug("`Link` header is present in the response.`")
+            logger.debug("`Link` header is present in the response.`")
             pagination_links = PaginationLinks.from_header(link_header)
         return pagination_links
 

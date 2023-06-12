@@ -1,6 +1,6 @@
-class HTTPLayerError(Exception):
+class MalformedResponseError(Exception):
     pass
 
 
-class MalformedResponseError(HTTPLayerError):
+class NotSupportedEndpointError(Exception):
     pass

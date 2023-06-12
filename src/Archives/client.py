@@ -1,4 +1,4 @@
-from logging import Logger
+import logging
 from typing import Dict
 
 from Archives.dtos import (
@@ -14,11 +14,12 @@ from Archives.dtos import (
 )
 from http_client import HTTPClientProtocol
 
+logger = logging.getLogger(__name__)
+
 
 class ArchivesApiClient:
-    def __init__(self, http_client: HTTPClientProtocol, log: Logger):
+    def __init__(self, http_client: HTTPClientProtocol):
         self._http_client = http_client
-        self._log = log
 
     def list_archive(self, path_params: ListArchivesPathParams) -> ListArchivesResponse:
         endpoint_url = f"/v1/assets/{path_params.asset_id}/archives"

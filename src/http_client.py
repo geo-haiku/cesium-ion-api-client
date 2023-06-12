@@ -1,7 +1,9 @@
-from logging import Logger
+import logging
 from typing import Tuple, Protocol, Dict
 from requests_toolbelt.sessions import BaseUrlSession
 from requests.structures import CaseInsensitiveDict
+
+logger = logging.getLogger(__name__)
 
 
 class HTTPClientProtocol(Protocol):
@@ -25,10 +27,9 @@ class HTTPClientProtocol(Protocol):
 
 
 class SessionClient(HTTPClientProtocol):
-    def __init__(self, host: str, log: Logger, bearer_token: str):
+    def __init__(self, host: str, bearer_token: str):
         self.bearer_token = bearer_token
         self.host = host
-        self.log = log
 
     def post(
         self, endpoint: str, headers: dict, data: dict
@@ -87,5 +88,5 @@ class SessionClient(HTTPClientProtocol):
         s = BaseUrlSession(self.host)
         s.headers.update(headers)
         s.headers.update({"Authorization": f"Bearer {self.bearer_token}"})
-        self.log.debug(f"{len(headers) + 1} header successfully added to base session.")
+        logger.debug(f"{len(headers) + 1} header(s) added to base session.")
         return s
