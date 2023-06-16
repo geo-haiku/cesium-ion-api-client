@@ -24,18 +24,20 @@ class ListAssetsQueryParameters(BaseModel):
     search: Optional[str]
     sortBy: SortByType = SortByType.ID
     sortOrder: SortOrder = SortOrder.ASC
-    status: List[AssetStatus] = []
-    type: List[AssetType] = []
+    status: Optional[List[AssetStatus]]
+    type: Optional[List[AssetType]]
 
     def to_query_params(self) -> str:
         query_params = f"?limit={self.limit}&page={self.page}&sortBy={self.sortBy.name}&sortOrder={self.sortOrder.value}"
         if self.search:
             query_params += f"&search={self.search}"
+        if self.status:
+            for status in self.status:
+                query_params += f"&status={status.value}"
 
-        for status in self.status:
-            query_params += f"&status={status.value}"
-        for type in self.type:
-            query_params += f"&type={type.value}"
+        if self.type:
+            for type in self.type:
+                query_params += f"&type={type.value}"
 
         return query_params
 
@@ -146,8 +148,8 @@ class AssetFrom(BaseModel):
     type: str = "S3"
     bucket: str
     credentials: AwsCredentials
-    keys: List[str] = Field(default=[])
-    prefixes: List[str] = Field(default=[])
+    keys: Optional[List[str]]
+    prefixes: Optional[List[str]]
 
 
 class CreateAssetRequest(BaseModel):

@@ -21,11 +21,15 @@ build-backend = "pdm.backend"
 [tool.pdm.dev-dependencies]
 dev = [
     "pre-commit>=3.3.2",
+    "pytest>=7.3.2",
+    "pytest-cov>=4.1.0",
+    "pytest-asyncio>=0.21.0",
 ]
 
 [tool.pyright]
 venvPath = "."
 venv = ".venv"
+ignore = ['./tests/*']
 
 [tool.ruff]
 ignore = ["E501"]

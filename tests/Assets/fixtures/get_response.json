@@ -1,0 +1,13 @@
+{
+  "id": 3812,
+  "name": "The Earth At Night",
+  "description": "The Earth at night, also known as [The Black Marble](https://earthobservatory.nasa.gov/Features/NightLights/).",
+  "attribution": "[NASA](https://earthobservatory.nasa.gov/image-use-policy)",
+  "type": "3DTILES",
+  "bytes": 8675309,
+  "dateAdded": "2019-03-19T13:17:02.838Z",
+  "status": "COMPLETE",
+  "percentComplete": 100,
+  "archivable": false,
+  "exportable": true
+}

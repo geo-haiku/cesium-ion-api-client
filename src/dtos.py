@@ -23,7 +23,12 @@ class PaginationLinks(BaseModel):
                 f"`Link` header value is invalid: {link_header=}."
             )
         else:
-            setattr(pagination_links, rel1, url1)
+            try:
+                setattr(pagination_links, rel1, url1)
+            except ValueError:
+                raise MalformedResponseError(
+                    f"`Link` header value is invalid: {link_header=}."
+                )
 
         try:
             url2 = header_els[2][1:-1]
@@ -31,6 +36,11 @@ class PaginationLinks(BaseModel):
         except IndexError:
             pass
         else:
-            setattr(pagination_links, rel2, url2)
+            try:
+                setattr(pagination_links, rel2, url2)
+            except ValueError:
+                raise MalformedResponseError(
+                    f"`Link` header value is invalid: {link_header=}."
+                )
 
         return pagination_links

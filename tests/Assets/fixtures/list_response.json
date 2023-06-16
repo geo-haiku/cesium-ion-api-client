@@ -1,0 +1,30 @@
+{
+  "items": [
+    {
+      "id": 1,
+      "type": "TERRAIN",
+      "name": "Cesium World Terrain",
+      "description": "High-resolution global terrain tileset curated from several data sources. See the official [Cesium World Terrain](https://cesium.com/content/cesium-world-terrain/) page for details.",
+      "bytes": 0,
+      "attribution": "Data available from the U.S. Geological Survey, © CGIAR-CSI, Produced using Copernicus data and information funded by the European Union - EU-DEM layers, Data available from Land Information New Zealand, Data available from data.gov.uk, Data courtesy Geoscience Australia",
+      "dateAdded": "2019-04-14T15:25:11.030Z",
+      "status": "COMPLETE",
+      "percentComplete": 100,
+      "archivable": false,
+      "exportable": false
+    },
+    {
+      "id": 92391,
+      "type": "3DTILES",
+      "name": "My House",
+      "description": "First attempt at photogrammetry.",
+      "bytes": 28459666,
+      "attribution": "",
+      "dateAdded": "2019-04-14T15:28:25.435Z",
+      "status": "COMPLETE",
+      "percentComplete": 100,
+      "archivable": true,
+      "exportable": true
+    }
+  ]
+}

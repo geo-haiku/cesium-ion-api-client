@@ -1,0 +1,28 @@
+{
+  "assetMetadata": {
+    "id": 21111,
+    "type": "3DTILES",
+    "name": "Reichstag",
+    "description": "Example Asset",
+    "attribution": "",
+    "bytes": 0,
+    "dateAdded": "2019-04-19T00:30:54.111Z",
+    "status": "AWAITING_FILES",
+    "percentComplete": 0,
+    "archivable": false,
+    "exportable": true
+  },
+  "uploadLocation": {
+    "endpoint": "https://s3.us-east-1.amazonaws.com",
+    "bucket": "assets.cesium.com",
+    "prefix": "sources/21111/",
+    "accessKey": "ASIATXRQLSFCKKLAIVXW",
+    "secretAccessKey": "Hd3ZC9yq78hoCR4KYF4atHEnytfgLJMNV0KPdpz8",
+    "sessionToken": "FQoGZXIvYXdzEIr//////////wEaDIEDvhx6N7x4Rd4+wiKtAht78S1zVze89DICpOxfnl/7kn7ox75U5hCv+UHlynJcbN5N7roU7iOz0SLbp9RrTrXPlUP0agskLV/5DUKcDId9FnZknDLVW03ajCeJMlzQK7vcxXK359OHp9l6OwLofVkkXH5Pd78vNcLEzqkLytoMRA0BK4wM2bFJySbfo89oUSxpwHXgslmlZtwHYOcVIyEQX1DmtNVi7Jsx6btgaqt+taLScYCWFsOrK+mpJX8vhe9NTd3gXiQ2BG01L9spfYP9iwt8eyjq9UAD9HCaQZrYvhK9JKAwBD81dkpkxpg2PL68d5B+yRBt90NgLgJc31raArGvurz9IAf034znL0IZntK56sKLcIYKEg0OzpybP0a4IqSLtHQDAYlHe7Z66ogDWmRMxLW+g4yiGtwovq3k5QU="
+  },
+  "onComplete": {
+    "method": "POST",
+    "url": "https://api.cesium.com/v1/assets/21111/uploadComplete",
+    "fields": {}
+  }
+}

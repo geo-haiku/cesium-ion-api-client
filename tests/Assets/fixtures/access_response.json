@@ -1,0 +1,11 @@
+{
+  "type": "3DTILES",
+  "url": "https://assets.cesium.com/23912/tileset.json",
+  "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiIyMjZmNzU0Yy02ZmVkLTQ4ODktOTUyMC0zMDRlMmNjODdiMzEiLCJpZCI6NDQsImFzc2V0cyI6eyIxIjp7InR5cGUiOiJURVJSQUlOIiwiZXh0ZW5zaW9ucyI6W3RydWUsdHJ1ZSx0cnVlXSwicHVsbEFwYXJ0VGVycmFpbiI6ZmFsc2V9fSwic3JjIjoiOGE2NjVmYmMtZDQzMy00ZmMxLWE3NDgtNjRhYWE3MjFiOTgzIiwiaWF0IjoxNTU0MTI4NTUzLCJleHAiOjE1NTQxMzIxNTN9.CWjqdF1LORmCd7nVbHupXyIjCPOfuSOpXwQoaQU_a94",
+  "attributions": [
+    {
+      "html": "<span><a href=\"https://cesium.com\" target=\"_blank\"><img alt=\"Cesium ion\" src=\"http://assets.cesium.com/ion-credit.png\"></a></span>",
+      "collapsible": false
+    }
+  ]
+}
