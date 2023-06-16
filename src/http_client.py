@@ -1,91 +1,118 @@
 import logging
 from typing import Tuple, Protocol, Dict
-from requests_toolbelt.sessions import BaseUrlSession
-from requests.structures import CaseInsensitiveDict
+import aiohttp
+
+from exceptions import (
+    InvalidCredentials,
+    ResourceNotFound,
+    PlanUpgradeRequired,
+    UnknownError,
+)
 
 logger = logging.getLogger(__name__)
 
 
 class HTTPClientProtocol(Protocol):
-    def post(
+    async def post(
         self, endpoint: str, headers: dict, data: dict
-    ) -> Tuple[int, dict, CaseInsensitiveDict[str]]:
+    ) -> Tuple[int, dict, dict]:
         raise NotImplementedError()
 
-    def get(
-        self, endpoint: str, headers: dict
-    ) -> Tuple[int, dict, CaseInsensitiveDict[str]]:
+    async def get(self, endpoint: str, headers: dict) -> Tuple[int, dict, dict]:
         raise NotImplementedError()
 
-    def patch(
+    async def patch(
         self, endpoint: str, headers: dict, data: dict
-    ) -> Tuple[int, dict, CaseInsensitiveDict[str]]:
+    ) -> Tuple[int, dict, dict]:
         raise NotImplementedError()
 
-    def delete(self, endpoint: str, headers: dict) -> None:
+    async def delete(self, endpoint: str, headers: dict) -> None:
         raise NotImplementedError()
 
 
-class SessionClient(HTTPClientProtocol):
+class AsyncClient(HTTPClientProtocol):
+    ERROR_PER_STATUS_CODE_MAP = {
+        "401": InvalidCredentials,
+        "404": ResourceNotFound,
+        "402": PlanUpgradeRequired,
+    }
+
     def __init__(self, host: str, bearer_token: str):
         self.bearer_token = bearer_token
         self.host = host
 
-    def post(
+    async def post(
         self, endpoint: str, headers: dict, data: dict
-    ) -> Tuple[int, dict, CaseInsensitiveDict[str]]:
-        with self._build_session(headers) as s:
-            result = s.post(endpoint, json=data)
-        if result.status_code != 200:
-            raise ValueError(
-                f"Request to: {self.host}{endpoint} has returned with status code: {result.status_code}. "
-                f'Error: "{str(result.content)}"'
-            )
+    ) -> Tuple[int, dict, dict]:
+        async with self._build_session(headers) as s:
+            async with s.post(endpoint, json=data) as result:
+                status_code = result.status
+                result_headers: Dict = dict(result.headers)
+                response_body: Dict = await result.json()
+                if status_code != 200:
+                    error_type = self.ERROR_PER_STATUS_CODE_MAP.get(
+                        str(status_code), UnknownError
+                    )
+                    raise error_type(
+                        f"POST request to: {self.host}{endpoint} has returned with status code: {status_code}. "
+                        f'Error: "{str(result.content)}"'
+                    )
 
-        response_body: Dict = result.json()
+        return status_code, response_body, result_headers
 
-        return result.status_code, response_body, result.headers
+    async def get(self, endpoint: str, headers: dict) -> Tuple[int, dict, dict]:
+        async with self._build_session(headers) as s:
+            async with s.get(endpoint) as result:
+                status_code = result.status
+                result_headers: Dict = dict(result.headers)
+                response_body: Dict = await result.json()
 
-    def get(
-        self, endpoint: str, headers: dict
-    ) -> Tuple[int, dict, CaseInsensitiveDict[str]]:
-        with self._build_session(headers) as s:
-            result = s.get(endpoint)
-        if result.status_code != 200:
-            raise ValueError(
-                f'Request to: {endpoint} has returned with status code: {result.status_code}. Error: "{str(result.content)}"'
-            )
+                if status_code != 200:
+                    error_type = self.ERROR_PER_STATUS_CODE_MAP.get(
+                        str(status_code), UnknownError
+                    )
+                    raise error_type(
+                        f"GET request to: {self.host}{endpoint} has returned with status code: {status_code}. "
+                        f'Error: "{str(result.content)}"'
+                    )
 
-        response_body: Dict = result.json()
+        return status_code, response_body, result_headers
 
-        return result.status_code, response_body, result.headers
-
-    def patch(
+    async def patch(
         self, endpoint: str, headers: dict, data: dict
-    ) -> Tuple[int, dict, CaseInsensitiveDict[str]]:
-        with self._build_session(headers) as s:
-            result = s.patch(endpoint, json=data)
-        if result.status_code != 204:
-            raise ValueError(
-                f"Request to: {self.host}{endpoint} has returned with status code: {result.status_code}. "
-                f'Error: "{str(result.content)}"'
-            )
+    ) -> Tuple[int, dict, dict]:
+        async with self._build_session(headers) as s:
+            async with s.patch(endpoint, json=data) as result:
+                status_code = result.status
+                result_headers: Dict = dict(result.headers)
+                response_body: Dict = await result.json()
 
-        response_body: Dict = result.json()
+                if status_code != 204:
+                    error_type = self.ERROR_PER_STATUS_CODE_MAP.get(
+                        str(status_code), UnknownError
+                    )
+                    raise error_type(
+                        f"PATCH request to: {self.host}{endpoint} has returned with status code: {status_code}. "
+                        f'Error: "{str(result.content)}"'
+                    )
 
-        return result.status_code, response_body, result.headers
+        return status_code, response_body, result_headers
 
-    def delete(self, endpoint: str, headers: dict) -> None:
-        with self._build_session(headers) as s:
-            result = s.delete(endpoint)
-        if result.status_code != 204:
-            raise ValueError(
-                f"Request to: {self.host}{endpoint} has returned with status code: {result.status_code}. "
-                f'Error: "{str(result.content)}"'
-            )
+    async def delete(self, endpoint: str, headers: dict) -> None:
+        async with self._build_session(headers) as s:
+            async with s.delete(endpoint) as result:
+                status_code = result.status
+                if status_code != 204:
+                    error_type = self.ERROR_PER_STATUS_CODE_MAP.get(
+                        str(status_code), UnknownError
+                    )
+                    raise error_type(
+                        f"DELETE request to: {self.host}{endpoint} has returned with status code: {status_code}. "
+                        f'Error: "{str(result.content)}"'
+                    )
 
-    def _build_session(self, headers: dict) -> BaseUrlSession:
-        s = BaseUrlSession(self.host)
+    def _build_session(self, headers: dict) -> aiohttp.ClientSession:
+        s = aiohttp.ClientSession(self.host)
         s.headers.update(headers)
         s.headers.update({"Authorization": f"Bearer {self.bearer_token}"})
         logger.debug(f"{len(headers) + 1} header(s) added to base session.")

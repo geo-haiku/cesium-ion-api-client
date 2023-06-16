@@ -26,18 +26,20 @@ class AssetsApiClient:
     def __init__(self, http_client: HTTPClientProtocol):
         self._http_client = http_client
 
-    def list_assets(
+    async def list_assets(
         self, query_params: ListAssetsQueryParameters
     ) -> Tuple[ListAssetsResponse, Optional[PaginationLinks]]:
         endpoint_url = "/v1/assets" + query_params.to_query_params()
-        status, response_body, headers = self._http_client.get(
+        status, response_body, headers = await self._http_client.get(
             endpoint=endpoint_url, headers={}
         )
-        pagination_links = self._retrieve_pagination_links(dict(headers))
+        pagination_links = await self._retrieve_pagination_links(dict(headers))
         list_assets_response = ListAssetsResponse.parse_obj(response_body)
         return list_assets_response, pagination_links
 
-    def _retrieve_pagination_links(self, headers: Dict) -> Optional[PaginationLinks]:
+    async def _retrieve_pagination_links(
+        self, headers: Dict
+    ) -> Optional[PaginationLinks]:
         try:
             link_header = headers["Link"]
         except KeyError:
@@ -48,31 +50,31 @@ class AssetsApiClient:
             pagination_links = PaginationLinks.from_header(link_header)
         return pagination_links
 
-    def create_a_new_asset(
+    async def create_a_new_asset(
         self, request_body_dto: CreateAssetRequest
     ) -> CreateAssetResponse:
         endpoint_url = "/v1/assets"
         headers = {"Content-type": "application/json"}
         request_body = request_body_dto.dict()
 
-        status, response_body, headers = self._http_client.post(
+        status, response_body, headers = await self._http_client.post(
             endpoint=endpoint_url, headers=headers, data=request_body
         )
         create_asset_response = CreateAssetResponse.parse_obj(response_body)
 
         return create_asset_response
 
-    def get_info_about_asset(
+    async def get_info_about_asset(
         self, path_params: AssetInfoPathParams
     ) -> AssetInfoResponse:
         endpoint_url = f"/v1/assets/{path_params.asset_id}"
-        status, response_body, headers = self._http_client.get(
+        status, response_body, headers = await self._http_client.get(
             endpoint=endpoint_url, headers={}
         )
         info_asset_response = AssetInfoResponse.parse_obj(response_body)
         return info_asset_response
 
-    def modify_asset_info(
+    async def modify_asset_info(
         self,
         path_params: ModifyAssetInfoPathParams,
         request_body_dto: ModifyAssetInfoRequest,
@@ -80,24 +82,25 @@ class AssetsApiClient:
         endpoint_url = f"/v1/assets/{path_params.asset_id}"
         request_body = request_body_dto.dict()
         headers = {"Content-type": "application/json"}
-        self._http_client.patch(
+        await self._http_client.patch(
             endpoint=endpoint_url, headers=headers, data=request_body
         )
 
-    def delete_asset(self, path_params: DeleteAssetPathParams) -> None:
+    async def delete_asset(self, path_params: DeleteAssetPathParams) -> None:
         endpoint_url = f"/v1/assets/{path_params.asset_id}"
-        self._http_client.delete(endpoint=endpoint_url, headers={})
+        await self._http_client.delete(endpoint=endpoint_url, headers={})
 
-    def access_tiles(
+    async def access_tiles(
         self, path_params: AccessTilesPathParams
     ) -> Union[AssetEndpoints, ExternalAssetEndpoints]:
         endpoint_url = f"/v1/assets/{path_params.asset_id}/endpoint"
-        status, response_body, headers = self._http_client.get(
+        status, response_body, headers = await self._http_client.get(
             endpoint=endpoint_url, headers={}
         )
-        return self._translate_to_proper_endpoint_dto(response_body)
+        endpoint_dto = await self._translate_to_proper_endpoint_dto(response_body)
+        return endpoint_dto
 
-    def _translate_to_proper_endpoint_dto(
+    async def _translate_to_proper_endpoint_dto(
         self, response_body: dict
     ) -> Union[AssetEndpoints, ExternalAssetEndpoints]:
         desired_types = [AssetEndpoints, ExternalAssetEndpoints]

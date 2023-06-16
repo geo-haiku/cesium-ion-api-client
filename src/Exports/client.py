@@ -20,18 +20,20 @@ class ExportsApiClient:
     def __init__(self, http_client: HTTPClientProtocol):
         self._http_client = http_client
 
-    def list_exports(
+    async def list_exports(
         self, path_params: ListExportsPathParams
     ) -> Tuple[ListExportsResponse, Optional[PaginationLinks]]:
         endpoint_url = f"/v1/assets/{path_params.asset_id}/exports"
-        status, response_body, headers = self._http_client.get(
+        status, response_body, headers = await self._http_client.get(
             endpoint=endpoint_url, headers={}
         )
-        pagination_links = self._retrieve_pagination_links(dict(headers))
+        pagination_links = await self._retrieve_pagination_links(dict(headers))
         list_exports_response = ListExportsResponse.parse_obj(response_body)
         return list_exports_response, pagination_links
 
-    def _retrieve_pagination_links(self, headers: Dict) -> Optional[PaginationLinks]:
+    async def _retrieve_pagination_links(
+        self, headers: Dict
+    ) -> Optional[PaginationLinks]:
         try:
             link_header = headers["Link"]
         except KeyError:
@@ -42,26 +44,26 @@ class ExportsApiClient:
             pagination_links = PaginationLinks.from_header(link_header)
         return pagination_links
 
-    def export_asset(
+    async def export_asset(
         self, path_params: ExportAssetPathParams, request_body_dto: ExportAssetRequest
     ) -> ExportAssetResponse:
         endpoint_url = f"/v1/assets/{path_params.asset_id}/exports"
         headers = {"Content-type": "application/json"}
         request_body = request_body_dto.dict()
 
-        status, response_body, headers = self._http_client.post(
+        status, response_body, headers = await self._http_client.post(
             endpoint=endpoint_url, headers=headers, data=request_body
         )
         export_asset_response = ExportAssetResponse.parse_obj(response_body)
         return export_asset_response
 
-    def get_export_status(
+    async def get_export_status(
         self, path_params: GetExportStatusPathParams
     ) -> GetExportStatusResponse:
         endpoint_url = (
             f"/v1/assets/{path_params.asset_id}/exports/{path_params.export_id}"
         )
-        status, response_body, headers = self._http_client.get(
+        status, response_body, headers = await self._http_client.get(
             endpoint=endpoint_url, headers={}
         )
         get_export_status = GetExportStatusResponse.parse_obj(response_body)

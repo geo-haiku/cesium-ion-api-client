@@ -7,7 +7,7 @@ from Tokens.client import TokensApiClient
 from User.client import UserApiClient
 from enums import Endpoints
 from exceptions import NotSupportedEndpointError
-from http_client import SessionClient
+from http_client import AsyncClient
 
 
 class RestApiClient(Protocol):
@@ -36,7 +36,7 @@ class ClientFactory:
         TokensApiClient,
         UserApiClient,
     ]:
-        http_client = SessionClient(host=self.host, bearer_token=self.bearer_token)
+        http_client = AsyncClient(host=self.host, bearer_token=self.bearer_token)
         try:
             client = self.ENDPOINT_TO_API_CLIENT_MAP[endpoint]
         except KeyError as e:
