@@ -1,0 +1,18 @@
+{
+  "id": "a4538dc7-f583-4d9e-889e-35e2db4de534",
+  "name": "New Token",
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI1OGQ5MTdhYi1mNWRmLTQ5NGMtTEwOS02NmJlM2M1MzIxOWQiLCJpZCI6MiwiaWF0IjoxNjM0NTcyNTQzfQ.Cf055OJ6fdxw5NIBT0-JwD4aD9HjYQt9bf6CpadOGM",
+  "dateAdded": "2019-03-19T13:17:02.838Z",
+  "dateModified": "2019-03-19T13:17:02.838Z",
+  "dateLastUsed": "2019-03-19T13:17:02.838Z",
+  "assetIds": [
+    90,
+    98,
+    99,
+    100
+  ],
+  "isDefault": true,
+  "scopes": [
+    "profile:read"
+  ]
+}

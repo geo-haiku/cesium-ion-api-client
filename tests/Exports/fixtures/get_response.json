@@ -1,0 +1,12 @@
+{
+  "id": 1,
+  "assetId": 3812,
+  "status": "COMPLETE",
+  "bytesExported": 1024,
+  "dateAdded": "2022-09-20T16:16:02.838Z",
+  "to": {
+    "type": "S3",
+    "bucket": "string",
+    "prefix": "string"
+  }
+}

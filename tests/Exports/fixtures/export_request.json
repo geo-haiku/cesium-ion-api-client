@@ -1,0 +1,8 @@
+{
+  "format": "S3",
+  "bucket": "destinationBucket",
+  "prefix": "destinationPrefix",
+  "accessKeyId": "access-key",
+  "secretAccessKey": "secret-access-key",
+  "sessionToken": "FynJcbN5N//////////wEaDIEDvhx6N7x4Rd4+wiKtAht78S1zVze89DICpOxfnl/7kn7ox75U5hCv+UHlynJcbN5N7roU7iOz0SLbp9RrTrXPlUP0agskLV/5DUKcDId9FnZknDLVW03ajCeJMlzQK7vcxXK359OHp9l6OwLofVkkXH5Pd78vNcLEzqkLytoMRA0BK4wM2bFJySbfo89oUSxpwHXgslmlZtwHYOcVIyEQX1DmtNVi7Jsx6btgaqt+taLScYCWFsOrK+mpJX8vhe9NTd3gXiQ2BG01L9spfYP9iwt8eyjq9UAD9HCaQZrYvhK9JKAwBD81dkpkxpg2PL68d5B+yRBt90NgLgJc31raArGvurz9IAf034znL0IZntK56sKLcIYKEg0OzpybP0a4IqSLtHQDAYlHe7Z66ogDWmRMxLW+g4yiGtwovq3k5QU="
+}

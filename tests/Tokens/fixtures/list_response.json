@@ -1,0 +1,38 @@
+{
+  "items": [
+    {
+      "id": "58d917ab-f5df-494c-9109-66be3c53219d",
+      "name": "An Access Token",
+      "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI1OGQ5MTdhYi1mNWRmLTQ5NGMtOTEwOS02NmJlM2M1MzIxOWQiLCJpZCI6MiwiaWF0IjoxNjM0NTcyNTQzfQ.Cf055OJ96fdxw5NIBT0-JwD4aD9HjYQt9bf6CpadOGM",
+      "isDefault": false,
+      "dateLastUsed": "2021-10-18T15:55:43.977Z",
+      "dateAdded": "2021-09-10T18:29:57.583Z",
+      "dateModified": "2021-09-11T18:29:57.583Z",
+      "scopes": [
+        "assets:list",
+        "assets:read",
+        "assets:write",
+        "geocode",
+        "profile:read"
+      ],
+      "assetIds": []
+    },
+    {
+      "id": "8494d9bc-a0c7-46ac-b0f5-58bdd6a9724a",
+      "name": "Another New Token",
+      "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI4NDk0ZDliYy1hMGM3LTQ2YWMtYjBmNS01OGJkZDZhOTcyNGEiLCJpZCI6MiwiaWF0IjoxNjMzOTgyNjk5fQ.JcD0nmNbO-vVQsoa5w8CudbsCeuN1d7Svmy_GzoehHg",
+      "isDefault": false,
+      "dateLastUsed": "2021-10-11T20:04:59.380Z",
+      "dateAdded": "2021-09-09T18:29:57.583Z",
+      "dateModified": "2021-09-10T18:29:57.583Z",
+      "scopes": [
+        "assets:read",
+        "geocode"
+      ],
+      "assetIds": [
+        80,
+        98
+      ]
+    }
+  ]
+}

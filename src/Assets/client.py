@@ -103,7 +103,7 @@ class AssetsApiClient:
     async def _translate_to_proper_endpoint_dto(
         self, response_body: dict
     ) -> Union[AssetEndpoints, ExternalAssetEndpoints]:
-        desired_types = [AssetEndpoints, ExternalAssetEndpoints]
+        desired_types = [ExternalAssetEndpoints, AssetEndpoints]
         for type in desired_types:
             try:
                 endpoint_dto = type.parse_obj(response_body)
@@ -114,5 +114,5 @@ class AssetsApiClient:
             else:
                 return endpoint_dto
         raise MalformedResponseError(
-            f"Provided response is not matching any of supported schemas: {', '.join(str(desired_types))}."
+            f"Provided response is not matching any of supported schemas: {', '.join(map(str, desired_types))}."
         )

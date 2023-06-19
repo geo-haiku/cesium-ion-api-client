@@ -1,0 +1,20 @@
+{
+  "name": "Token",
+  "scopes": [
+    "assets:read",
+    "geocode",
+    "profile:read"
+  ],
+  "assetIds": [
+    98,
+    96,
+    94,
+    89
+  ],
+  "allowedUrls": [
+    "https://example.com",
+    "https://subdomain.example.com",
+    "https://example.com/path/",
+    "https://example.com:8080"
+  ]
+}

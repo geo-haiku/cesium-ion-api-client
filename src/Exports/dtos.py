@@ -22,7 +22,7 @@ class To(BaseModel):
 
 
 class ExportMetadata(BaseModel):
-    id: Optional[int]
+    id: Optional[str]
     asset_id: Optional[int] = Field(alias="assetId")
     date_added: Optional[str] = Field(alias="dateAdded")
     status: Optional[ExportsStatus]

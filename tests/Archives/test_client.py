@@ -1,4 +1,5 @@
 import json
+from pathlib import Path
 from unittest.mock import AsyncMock
 
 from Archives.client import ArchivesApiClient
@@ -18,7 +19,8 @@ from Archives.enums import ArchiveStatus
 
 @pytest.mark.asyncio
 async def test_list_archive() -> None:
-    with open("./fixtures/list_response.json") as f:
+    req_path = Path("./Archives/fixtures/list_response.json")
+    with open(req_path.resolve()) as f:
         req = json.load(f)
 
     http_client = AsyncMock()
@@ -50,10 +52,12 @@ async def test_list_archive() -> None:
 
 @pytest.mark.asyncio
 async def test_create_archive() -> None:
-    with open("./fixtures/create_request.json") as f:
+    req_path = Path("Archives/fixtures/create_request.json")
+    with open(req_path.resolve()) as f:
         req = json.load(f)
 
-    with open("./fixtures/create_response.json") as f:
+    res_path = Path("Archives/fixtures/create_response.json")
+    with open(res_path.resolve()) as f:
         res = json.load(f)
 
     http_client = AsyncMock()
@@ -79,7 +83,8 @@ async def test_create_archive() -> None:
 
 @pytest.mark.asyncio
 async def test_get_info_about_archive() -> None:
-    with open("./fixtures/get_response.json") as f:
+    res_path = Path("Archives/fixtures/get_response.json")
+    with open(res_path.resolve()) as f:
         res = json.load(f)
 
     http_client = AsyncMock()

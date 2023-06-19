@@ -1,0 +1,18 @@
+{
+  "name": "New Token",
+  "assetIds": [
+    90,
+    98,
+    99,
+    100
+  ],
+  "scopes": [
+    "profile:read"
+  ],
+  "allowedUrls": [
+    "https://example.com",
+    "https://subdomain.example.com",
+    "https://example.com/path/",
+    "https://example.com:8080"
+  ]
+}

@@ -1,0 +1,10 @@
+{
+  "externalType": "BING",
+  "type": "3DTILES",
+  "attributions": [
+    {
+      "html": "<span><a href=\"https://cesium.com\" target=\"_blank\"><img alt=\"Cesium ion\" src=\"http://assets.cesium.com/ion-credit.png\"></a></span>",
+      "collapsible": false
+    }
+  ]
+}

@@ -1,0 +1,20 @@
+{
+  "id": "3171672f-b6a3-43ae-90d5-0d559a7bf73b",
+  "name": "Token",
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiIzMTcxNjcyZi1iNmEzLTQzYWUtOTBkNS0wZDU1OWE3YmY3M2IiLCJpZCI6MSwiaWF0IjoxNjM0Njc1OTU0fQ.cRbNs2IKXbvZjVpjWIId3YB3CeppiIQgbR7mZTKC1UI",
+  "isDefault": false,
+  "dateLastUsed": "2021-10-19T20:39:14.372Z",
+  "dateAdded": "2021-10-19T20:39:14.372Z",
+  "dateModified": "2021-10-19T20:39:14.372Z",
+  "scopes": [
+    "assets:read",
+    "geocode",
+    "profile:read"
+  ],
+  "assetIds": [
+    98,
+    96,
+    94,
+    89
+  ]
+}

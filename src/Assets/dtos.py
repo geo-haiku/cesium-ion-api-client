@@ -223,7 +223,7 @@ class Attribution(BaseModel):
 
 
 class AssetEndpoints(BaseModel):
-    type: Optional[AssetType]
+    type: AssetType
     url: Optional[str]
     access_token: Optional[str] = Field(alias="accessToken")
     attributions: List[Attribution] = Field([])
@@ -236,7 +236,7 @@ class Options(BaseModel):
 
 
 class ExternalAssetEndpoints(BaseModel):
-    external_type: str = Field("BING", alias="externalType")
+    external_type: str = Field(alias="externalType")
     type: Optional[AssetType]
     attributions: List[Attribution] = Field([])
     options: Optional[Options]
