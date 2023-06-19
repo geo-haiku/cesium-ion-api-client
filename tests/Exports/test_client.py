@@ -1,4 +1,5 @@
 import json
+from pathlib import Path
 from unittest.mock import AsyncMock
 
 import pytest
@@ -15,7 +16,8 @@ from Exports.enums import ExportsStatus
 
 @pytest.mark.asyncio
 async def test_list_assets_while_link_header_is_present() -> None:
-    with open("./fixtures/list_response.json") as f:
+    res_path = Path("Exports/fixtures/list_response.json")
+    with open(res_path.resolve()) as f:
         res = json.load(f)
 
     http_client = AsyncMock()
@@ -56,7 +58,8 @@ async def test_list_assets_while_link_header_is_present() -> None:
 
 @pytest.mark.asyncio
 async def test_list_assets_while_link_header_is_not_present() -> None:
-    with open("./fixtures/list_response.json") as f:
+    res_path = Path("Exports/fixtures/list_response.json")
+    with open(res_path.resolve()) as f:
         res = json.load(f)
 
     http_client = AsyncMock()
@@ -76,10 +79,12 @@ async def test_list_assets_while_link_header_is_not_present() -> None:
 
 @pytest.mark.asyncio
 async def test_export_asset() -> None:
-    with open("./fixtures/export_response.json") as f:
+    res_path = Path("Exports/fixtures/export_response.json")
+    with open(res_path.resolve()) as f:
         res = json.load(f)
 
-    with open("./fixtures/export_request.json") as f:
+    req_path = Path("Exports/fixtures/export_request.json")
+    with open(req_path.resolve()) as f:
         req = json.load(f)
 
     http_client = AsyncMock()
@@ -108,7 +113,8 @@ async def test_export_asset() -> None:
 
 @pytest.mark.asyncio
 async def test_get_export_asset() -> None:
-    with open("./fixtures/get_response.json") as f:
+    res_path = Path("Exports/fixtures/get_response.json")
+    with open(res_path.resolve()) as f:
         res = json.load(f)
 
     http_client = AsyncMock()

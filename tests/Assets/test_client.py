@@ -1,4 +1,5 @@
 import json
+from pathlib import Path
 from unittest.mock import AsyncMock
 
 import pytest
@@ -21,7 +22,8 @@ from exceptions import MalformedResponseError
 
 @pytest.mark.asyncio
 async def test_list_assets_while_link_header_is_present() -> None:
-    with open("./fixtures/list_response.json") as f:
+    res_path = Path("Assets/fixtures/list_response.json")
+    with open(res_path.resolve()) as f:
         res = json.load(f)
 
     http_client = AsyncMock()
@@ -74,7 +76,8 @@ async def test_list_assets_while_link_header_is_present() -> None:
 
 @pytest.mark.asyncio
 async def test_list_assets_while_link_header_is_not_present() -> None:
-    with open("./fixtures/list_response.json") as f:
+    res_path = Path("Assets/fixtures/list_response.json")
+    with open(res_path.resolve()) as f:
         res = json.load(f)
 
     http_client = AsyncMock()
@@ -89,10 +92,12 @@ async def test_list_assets_while_link_header_is_not_present() -> None:
 
 @pytest.mark.asyncio
 async def test_create_a_new_asset() -> None:
-    with open("./fixtures/create_response.json") as f:
+    res_path = Path("Assets/fixtures/create_response.json")
+    with open(res_path.resolve()) as f:
         res = json.load(f)
 
-    with open("./fixtures/create_request.json") as f:
+    req_path = Path("Assets/fixtures/create_request.json")
+    with open(req_path.resolve()) as f:
         req = json.load(f)
 
     http_client = AsyncMock()
@@ -144,7 +149,8 @@ async def test_create_a_new_asset() -> None:
 
 @pytest.mark.asyncio
 async def test_get_info_about_asset() -> None:
-    with open("./fixtures/get_response.json") as f:
+    res_path = Path("Assets/fixtures/get_response.json")
+    with open(res_path.resolve()) as f:
         res = json.load(f)
 
     http_client = AsyncMock()
@@ -178,7 +184,8 @@ async def test_get_info_about_asset() -> None:
 
 @pytest.mark.asyncio
 async def test_modify_asset_info() -> None:
-    with open("./fixtures/modify_request.json") as f:
+    req_path = Path("Assets/fixtures/modify_request.json")
+    with open(req_path.resolve()) as f:
         req = json.load(f)
 
     http_client = AsyncMock()
@@ -213,7 +220,8 @@ async def test_delete_asset() -> None:
 
 @pytest.mark.asyncio
 async def test_access_tiles_asset_endpoint() -> None:
-    with open("./fixtures/access_response.json") as f:
+    res_path = Path("Assets/fixtures/access_response.json")
+    with open(res_path.resolve()) as f:
         res = json.load(f)
     http_client = AsyncMock()
     http_client.get.return_value = (200, res, {})
@@ -245,7 +253,8 @@ async def test_access_tiles_asset_endpoint() -> None:
 
 @pytest.mark.asyncio
 async def test_access_tiles_external_asset_endpoint() -> None:
-    with open("./fixtures/external_access_response.json") as f:
+    res_path = Path("Assets/fixtures/external_access_response.json")
+    with open(res_path.resolve()) as f:
         res = json.load(f)
     http_client = AsyncMock()
     http_client.get.return_value = (200, res, {})

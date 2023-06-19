@@ -1,4 +1,5 @@
 import json
+from pathlib import Path
 from unittest.mock import AsyncMock
 
 import pytest
@@ -8,7 +9,8 @@ from User.client import UserApiClient
 
 @pytest.mark.asyncio
 async def test_profile_info() -> None:
-    with open("./fixtures/get_response.json") as f:
+    res_path = Path("User/fixtures/get_response.json")
+    with open(res_path.resolve()) as f:
         res = json.load(f)
 
     http_client = AsyncMock()

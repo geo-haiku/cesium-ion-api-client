@@ -1,4 +1,5 @@
 import json
+from pathlib import Path
 from unittest.mock import AsyncMock
 
 import pytest
@@ -17,7 +18,8 @@ from Tokens.enums import TokenScopes
 
 @pytest.mark.asyncio
 async def test_list_archive() -> None:
-    with open("./fixtures/list_response.json") as f:
+    res_path = Path("Tokens/fixtures/list_response.json")
+    with open(res_path.resolve()) as f:
         res = json.load(f)
 
     http_client = AsyncMock()
@@ -72,7 +74,8 @@ async def test_list_archive() -> None:
 
 @pytest.mark.asyncio
 async def test_list_archive_while_link_header_is_faulty() -> None:
-    with open("./fixtures/list_response.json") as f:
+    res_path = Path("Tokens/fixtures/list_response.json")
+    with open(res_path.resolve()) as f:
         res = json.load(f)
 
     http_client = AsyncMock()
@@ -90,10 +93,12 @@ async def test_list_archive_while_link_header_is_faulty() -> None:
 
 @pytest.mark.asyncio
 async def test_create_new_token() -> None:
-    with open("./fixtures/create_response.json") as f:
+    res_path = Path("Tokens/fixtures/create_response.json")
+    with open(res_path.resolve()) as f:
         res = json.load(f)
 
-    with open("./fixtures/create_request.json") as f:
+    req_path = Path("Tokens/fixtures/create_request.json")
+    with open(req_path.resolve()) as f:
         req = json.load(f)
 
     http_client = AsyncMock()
@@ -129,7 +134,8 @@ async def test_create_new_token() -> None:
 
 @pytest.mark.asyncio
 async def test_get_info_about_token() -> None:
-    with open("./fixtures/get_response.json") as f:
+    res_path = Path("Tokens/fixtures/get_response.json")
+    with open(res_path.resolve()) as f:
         res = json.load(f)
 
     http_client = AsyncMock()
@@ -163,7 +169,8 @@ async def test_get_info_about_token() -> None:
 
 @pytest.mark.asyncio
 async def test_modify_token_info() -> None:
-    with open("./fixtures/modiy_request.json") as f:
+    req_path = Path("Tokens/fixtures/modiy_request.json")
+    with open(req_path.resolve()) as f:
         req = json.load(f)
 
     http_client = AsyncMock()
@@ -193,7 +200,8 @@ async def test_delete_asset() -> None:
 
 @pytest.mark.asyncio
 async def test_get_default_token() -> None:
-    with open("./fixtures/get_default_response.json") as f:
+    res_path = Path("Tokens/fixtures/get_default_response.json")
+    with open(res_path.resolve()) as f:
         res = json.load(f)
 
     http_client = AsyncMock()
