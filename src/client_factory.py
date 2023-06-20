@@ -1,4 +1,4 @@
-from typing import Protocol, Union
+from typing import Union
 
 from Archives.client import ArchivesApiClient
 from Assets.client import AssetsApiClient
@@ -8,10 +8,6 @@ from User.client import UserApiClient
 from enums import Endpoints
 from exceptions import NotSupportedEndpointError
 from http_client import AsyncClient
-
-
-class RestApiClient(Protocol):
-    pass
 
 
 class ClientFactory:

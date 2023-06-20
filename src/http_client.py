@@ -38,8 +38,8 @@ class AsyncClient(HTTPClientProtocol):
     }
 
     def __init__(self, host: str, bearer_token: str):
-        self.bearer_token = bearer_token
         self.host = host
+        self.bearer_token = bearer_token
 
     async def post(
         self, endpoint: str, headers: dict, data: dict
